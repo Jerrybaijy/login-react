@@ -12,8 +12,10 @@ const App = () => {
   };
 
   return (
+
     <Router>
       <Routes>
+        {/*如果未登录直接访问 Home 页面，则跳转至登录页面*/}
         <Route path="/" element={isLoggedIn ? <Navigate to="/home" /> : <Login onLogin={handleLoginSuccess} />} />
         <Route path="/home" element={isLoggedIn ? <Home /> : <Navigate to="/" />} />
       </Routes>
