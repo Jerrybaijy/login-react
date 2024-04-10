@@ -27,7 +27,7 @@ function App() {
     try {
       await axios.post('http://localhost:5000/register', {username, password});
       setMessage('注册成功');
-      setUsername('');
+      setUsername('');  // 清空输入框
       setPassword('');
       fetchUsers();
     } catch (error) {
@@ -37,11 +37,16 @@ function App() {
 
   const handleLogin = async () => {
     try {
-      await axios.post('http://localhost:5000/login', {username, password});
-      setMessage('登录成功');
-      setUsername('');
-      setPassword('');
-      fetchUsers();
+      const response = await axios.post('http://localhost:5000/login', {username, password});
+      if (response.data.message === '登录成功') {
+        setMessage(response.data.message);
+        setUsername('');
+        setPassword('');
+        fetchUsers();
+      } else {
+        setMessage(response.data.message);
+      }
+
     } catch (error) {
       console.error('Login failed:', error);
     }
